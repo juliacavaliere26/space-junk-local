@@ -42,7 +42,7 @@ class Level {
     for (let i = 0; i < lives - 1; i++) {
       push();
       translate(
-        Level.LIVES_PAD_LEFT + i * (30 * Level.LIVES_SCALE + Level.LIVES_GAP),
+        Level.LIVES_PAD_LEFT + i * Level.LIVES_GAP,
         height - Level.LIVES_PAD_BOTTOM
       );
       scale(Level.LIVES_SCALE);

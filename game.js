@@ -82,7 +82,24 @@ class Game {
 
   
   resolveDropoff(delta) {
-    return false;
+    const junk = this.magpie.capturedJunk;
+    if (junk === null) {
+      return false;
+    }
+
+    const distance = dist(
+      junk.physics.x,
+      junk.physics.y,
+      this.mothership.physics.x,
+      this.mothership.physics.y
+    );
+    if (distance <= Mothership.PICKUP_DIAMETER / 2) {
+      junk.dropoffTime += delta;
+    } else {
+      junk.dropoffTime = Math.max(0, junk.dropoffTime - delta);
+    }
+
+    return junk.dropoffTime > Game.JUNK_DROPOFF_TIME_MS;
   }
 
   draw() {
@@ -109,6 +126,9 @@ class Game {
   }
 
   updateScore(reason) {
+    if (reason === "dropoff") {
+      this.score += Game.SCORE_DROPOFF;
+    }
   }
 
   isLevelComplete() {
